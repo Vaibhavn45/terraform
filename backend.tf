@@ -1,7 +1,7 @@
 terraform {
     backend "s3" {
      bucket = "vaibhavc-sf"
-     region = "us-est-2"
+     region = "us-east-2"
      key = "tfstate-file"
     }
 }
