@@ -4,8 +4,8 @@ provider "aws" {
 }
 
 resource "aws_instance" "myec2" {
-  ami                    = "ami-01e4a7224fcbfe81f"
-  instance_type          = "t3.micro"
+  ami                    = var.myami
+  instance_type          = var.instance_type 
   key_name               = "id_rsa"
   vpc_security_group_ids = ["sg-07f20ea18fe5f6290"]
 
@@ -14,4 +14,12 @@ resource "aws_instance" "myec2" {
     Env     = "dev"
     Project = "spider"
   }
+}
+variable "myami " {
+default = "ami-01e4a7224fcbfe81f"
+description = "this is us-east-2 ami"
+}
+variable "instance_type" {
+default = "t3.micro"
+description = "this is us-east-2 ami"
 }
