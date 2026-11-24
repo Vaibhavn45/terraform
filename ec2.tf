@@ -15,7 +15,7 @@ resource "aws_instance" "myec2" {
     Project = "spider"
   }
 }
-variable "myami " {
+variable "myami" {
 default = "ami-01e4a7224fcbfe81f"
 description = "this is us-east-2 ami"
 }
