@@ -54,3 +54,14 @@ resource "aws_route_table_association" "route-connectivity" {
   subnet_id      = aws_subnet.pub-subnet.id
   route_table_id = aws_route_table.myroute.id
 }
+resource "aws_instance" "myec2" {
+  ami                    = var.myami
+  instance_type          = var.instance_type
+  key_name               = var.key_name
+  vpc_security_group_ids = [var.mysg]
+  subnet_id              = aws_subnet.pub-subnet.id
+
+  tags = {
+    Name = "myec2"
+  }
+}
