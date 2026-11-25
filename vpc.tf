@@ -54,11 +54,35 @@ resource "aws_route_table_association" "route-connectivity" {
   subnet_id      = aws_subnet.pub-subnet.id
   route_table_id = aws_route_table.myroute.id
 }
+resource "aws_security_group" "my-sg" {
+  name        = "my-ec2-sg"
+  description = "Allow SSH access"
+  vpc_id      = aws_vpc.myvpc.id
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["YOUR_PUBLIC_IP/32"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "my-ec2-sg"
+  }
+}
 resource "aws_instance" "myec2" {
   ami                    = var.myami
   instance_type          = var.instance_type
   key_name               = var.key_name
-  vpc_security_group_ids = [var.mysg]
+  vpc_security_group_ids = [aws_security_group.my-sg.id]
   subnet_id              = aws_subnet.pub-subnet.id
 
   tags = {
